@@ -68,12 +68,13 @@ async function uploadScreenshot(
   owner: string,
   repo: string,
   branch: string,
+  prNumber: number,
   screenshot: Screenshot,
 ): Promise<string> {
   const content = readFileSync(screenshot.path);
   const base64 = content.toString('base64');
   const fileName = `${screenshot.route.replace(/\//g, '_').replace(/^_/, '') || 'home'}.png`;
-  const path = `ui-check-screenshots/${fileName}`;
+  const path = `pr-${prNumber}/${fileName}`;
 
   // Check if file already exists (need its SHA to update)
   let sha: string | undefined;
@@ -89,7 +90,7 @@ async function uploadScreenshot(
   await githubFetch(`/repos/${owner}/${repo}/contents/${path}`, {
     method: 'PUT',
     body: JSON.stringify({
-      message: `chore: ui-check screenshot for ${screenshot.route}`,
+      message: `chore: ui-check screenshot for ${screenshot.route} (PR #${prNumber})`,
       content: base64,
       branch,
       ...(sha ? { sha } : {}),
@@ -111,7 +112,7 @@ export async function postPrComment(options: GithubReporterOptions): Promise<voi
 
   const uploadedImages: { screenshot: Screenshot; url: string }[] = [];
   for (const s of screenshots) {
-    const url = await uploadScreenshot(owner, repo, screenshotsBranch, s);
+    const url = await uploadScreenshot(owner, repo, screenshotsBranch, prNumber, s);
     uploadedImages.push({ screenshot: s, url });
   }
 
