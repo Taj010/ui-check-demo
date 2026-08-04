@@ -28,11 +28,11 @@ jobs:
               content: 'eyes'
             });
 
-      - name: Checkout PR branch
+      - name: Checkout PR branch (merged with main)
         uses: actions/checkout@v4
         with:
-          # Check out the PR's HEAD commit, not the merge commit
-          ref: refs/pull/${{ github.event.issue.number }}/head
+          # Use the merge ref so the PR gets main's latest ui-check/ tool code
+          ref: refs/pull/${{ github.event.issue.number }}/merge
           fetch-depth: 0
 
       - name: Setup Node
