@@ -5,6 +5,7 @@ const projects = [
     notebooks: 2,
     models: 1,
     storage: '18 GiB',
+    gpuQuota: '4 GPU',
     status: 'Active',
     created: 'Jul 28, 2026',
   },
@@ -14,6 +15,7 @@ const projects = [
     notebooks: 4,
     models: 3,
     storage: '42 GiB',
+    gpuQuota: '8 GPU',
     status: 'Active',
     created: 'Jul 15, 2026',
   },
@@ -23,6 +25,7 @@ const projects = [
     notebooks: 1,
     models: 0,
     storage: '5 GiB',
+    gpuQuota: '—',
     status: 'Inactive',
     created: 'Jun 30, 2026',
   },
@@ -32,6 +35,7 @@ const projects = [
     notebooks: 3,
     models: 2,
     storage: '27 GiB',
+    gpuQuota: '2 GPU',
     status: 'Active',
     created: 'Jun 12, 2026',
   },
@@ -41,6 +45,7 @@ const projects = [
     notebooks: 2,
     models: 1,
     storage: '11 GiB',
+    gpuQuota: '—',
     status: 'Error',
     created: 'May 5, 2026',
   },
@@ -72,6 +77,7 @@ export default function Projects() {
               <th>Notebooks</th>
               <th>Models</th>
               <th>Storage</th>
+              <th>GPU Quota</th>
               <th>Status</th>
               <th>Created</th>
               <th></th>
@@ -85,6 +91,9 @@ export default function Projects() {
                 <td>{p.notebooks}</td>
                 <td>{p.models}</td>
                 <td>{p.storage}</td>
+                <td style={{ color: p.gpuQuota === '—' ? 'var(--color-text-muted)' : undefined }}>
+                  {p.gpuQuota}
+                </td>
                 <td>
                   <span className={`badge ${statusBadge[p.status] ?? 'badge-neutral'}`}>
                     {p.status}
