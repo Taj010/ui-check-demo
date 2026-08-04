@@ -19,8 +19,8 @@ export default function Home() {
     <main className="page">
       <div className="page-header">
         <div>
-          <div className="page-header-title">Welcome back</div>
-          <div className="page-header-sub">Here's what's happening across your AI platform today.</div>
+          <div className="page-header-title">Your at-a-glance view</div>
+          <div className="page-header-sub">Key statistics and recent activity across your AI platform.</div>
         </div>
       </div>
 
@@ -37,7 +37,7 @@ export default function Home() {
       <div className="grid-2">
         <div className="card">
           <div className="card-title">Recent Activity</div>
-          <div className="card-subtitle" style={{ marginBottom: 16 }}>Platform events across all projects</div>
+          <div className="card-subtitle" style={{ marginBottom: 16 }}>Latest deployments, pipeline runs, and project updates happening now.</div>
           <div className="activity-list">
             {activity.map((a, i) => (
               <div className="activity-item" key={i}>
@@ -54,7 +54,7 @@ export default function Home() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <div className="card">
             <div className="card-title">Quick Links</div>
-            <div className="card-subtitle" style={{ marginBottom: 16 }}>Jump to common tasks</div>
+            <div className="card-subtitle" style={{ marginBottom: 16 }}>Get started with the most common actions in one click.</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
                 { label: '+ Create a new project', href: '/projects' },
@@ -70,7 +70,7 @@ export default function Home() {
 
           <div className="card">
             <div className="card-title">Cluster Status</div>
-            <div className="card-subtitle" style={{ marginBottom: 14 }}>OpenShift cluster — us-east-1</div>
+            <div className="card-subtitle" style={{ marginBottom: 14 }}>Live health of your OpenShift cluster and platform operators.</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
                 { label: 'API Server', status: 'Healthy', badge: 'badge-success' },
