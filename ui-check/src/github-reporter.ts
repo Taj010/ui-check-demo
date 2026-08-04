@@ -73,7 +73,7 @@ async function uploadScreenshot(
   const content = readFileSync(screenshot.path);
   const base64 = content.toString('base64');
   const fileName = `${screenshot.route.replace(/\//g, '_').replace(/^_/, '') || 'home'}.png`;
-  const path = `ui-check-screenshots/${fileName}`;
+  const path = `screenshots/${fileName}`;
 
   // Check if file already exists (need its SHA to update)
   let sha: string | undefined;
