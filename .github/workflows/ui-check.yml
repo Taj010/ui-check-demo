@@ -31,9 +31,12 @@ jobs:
       - name: Checkout PR branch (merged with main)
         uses: actions/checkout@v4
         with:
-          # Use the merge ref so the PR gets main's latest ui-check/ tool code
           ref: refs/pull/${{ github.event.issue.number }}/merge
           fetch-depth: 0
+
+      - name: Ensure ui-check/ tool is from main
+        run: |
+          git checkout origin/main -- ui-check/
 
       - name: Setup Node
         uses: actions/setup-node@v4
