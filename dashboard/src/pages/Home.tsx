@@ -2,6 +2,7 @@ export default function Home() {
   const stats = [
     { label: 'Active Projects', value: '12', trend: '↑ 3 this week', dir: 'up' },
     { label: 'Running Models', value: '7', trend: '↑ 1 today', dir: 'up' },
+    { label: 'Pipeline Runs', value: '24', trend: '↑ 6 this week', dir: 'up' },
     { label: 'Training Jobs', value: '3', trend: '— same as yesterday', dir: '' },
     { label: 'GPU Utilization', value: '68%', trend: '↓ 4% from peak', dir: 'down' },
   ];

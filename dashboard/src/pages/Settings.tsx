@@ -115,6 +115,32 @@ export default function Settings() {
             </div>
           </div>
         </div>
+
+        {/* Danger Zone */}
+        <div className="settings-section" style={{ borderColor: 'var(--color-danger)' }}>
+          <div className="settings-section-header" style={{ borderBottomColor: 'var(--color-danger)' }}>
+            <div className="settings-section-title" style={{ color: 'var(--color-danger)' }}>Danger Zone</div>
+            <div className="settings-section-desc">Irreversible actions — proceed with extreme caution</div>
+          </div>
+          <div className="settings-row">
+            <div>
+              <div className="settings-row-label">Reset all dashboard configuration</div>
+              <div className="settings-row-desc">Reverts all feature flags, notification settings, and custom runtimes to defaults</div>
+            </div>
+            <button className="btn" style={{ background: '#fff', color: 'var(--color-danger)', borderColor: 'var(--color-danger)' }}>
+              Reset config
+            </button>
+          </div>
+          <div className="settings-row">
+            <div>
+              <div className="settings-row-label">Remove this cluster from the dashboard</div>
+              <div className="settings-row-desc">Disconnects this cluster. All project data remains on the cluster but will no longer appear here.</div>
+            </div>
+            <button className="btn" style={{ background: 'var(--color-danger)', color: '#fff', borderColor: 'var(--color-danger)' }}>
+              Remove cluster
+            </button>
+          </div>
+        </div>
       </div>
     </main>
   );
