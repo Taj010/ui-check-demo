@@ -1,0 +1,14 @@
+{
+  "name": "ui-check-demo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "dashboard",
+    "ui-check"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=dashboard",
+    "build": "npm run build --workspace=dashboard",
+    "ui-check": "npm run start --workspace=ui-check"
+  }
+}

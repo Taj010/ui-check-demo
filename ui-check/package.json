@@ -1,0 +1,24 @@
+{
+  "name": "ui-check",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "ui-check": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/cli.ts",
+    "dev": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.47.2",
+    "minimatch": "^10.0.1",
+    "playwright": "^1.47.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "tsx": "^4.19.1",
+    "typescript": "^5.5.3"
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "glob": "dashboard/src/pages/Home.tsx",
+    "routes": ["/"],
+    "label": "Home"
+  },
+  {
+    "glob": "dashboard/src/pages/Projects.tsx",
+    "routes": ["/projects"],
+    "label": "Projects"
+  },
+  {
+    "glob": "dashboard/src/pages/Models.tsx",
+    "routes": ["/models"],
+    "label": "Model Serving"
+  },
+  {
+    "glob": "dashboard/src/pages/Settings.tsx",
+    "routes": ["/settings"],
+    "label": "Settings"
+  },
+  {
+    "glob": "dashboard/src/App.tsx",
+    "routes": ["/", "/projects", "/models", "/settings"],
+    "label": "All pages (app shell changed)"
+  },
+  {
+    "glob": "dashboard/src/styles.css",
+    "routes": ["/", "/projects", "/models", "/settings"],
+    "label": "All pages (global styles changed)"
+  }
+]

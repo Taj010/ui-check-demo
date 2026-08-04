@@ -1,0 +1,105 @@
+name: UI Check
+
+on:
+  issue_comment:
+    types: [created]
+
+# Only run if a PR comment contains "@bot ui-check"
+jobs:
+  ui-check:
+    if: |
+      github.event.issue.pull_request != null &&
+      contains(github.event.comment.body, '@bot ui-check')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write      # needed to push screenshots branch
+      pull-requests: write # needed to post PR comment
+      issues: write
+
+    steps:
+      - name: React to comment with eyes emoji
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: 'eyes'
+            });
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          # Check out the PR's HEAD commit, not the merge commit
+          ref: refs/pull/${{ github.event.issue.number }}/head
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install all dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+        working-directory: ui-check
+
+      - name: Start dashboard dev server (background)
+        run: npm run dev --workspace=dashboard &
+        # Give Vite time to boot before taking screenshots
+        # We'll wait for the port to be ready below
+
+      - name: Wait for dashboard to be ready
+        run: |
+          echo "Waiting for localhost:5173..."
+          for i in $(seq 1 30); do
+            if curl -s http://localhost:5173 > /dev/null; then
+              echo "Dashboard is up!"
+              break
+            fi
+            echo "  attempt $i..."
+            sleep 2
+          done
+
+      - name: Run UI Check
+        run: npx tsx src/cli.ts --repo ${{ github.repository }} --pr ${{ github.event.issue.number }}
+        working-directory: ui-check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Upload screenshots as artifact (backup)
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ui-check-screenshots-pr-${{ github.event.issue.number }}
+          path: ui-check/screenshots/
+          retention-days: 14
+
+      - name: React to comment with checkmark on success
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: '+1'
+            });
+
+      - name: React to comment with x on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: '-1'
+            });
